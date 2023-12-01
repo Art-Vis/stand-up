@@ -4,6 +4,8 @@ import { Notification } from './notification';
 import { sendData } from './api';
 
 const notification = Notification.getInstance();
+const eventButtonReserve = document.querySelector('.event__button_reserve');
+const eventButtonEdit = document.querySelector('.event__button_edit');
 
 export const formValidate = (
   bookingForm,
@@ -69,59 +71,61 @@ export const formValidate = (
       notification.show(errorMessage.slice(0, -2), false);
     });
 
-    const submitHandler = async (e) => {
-      e.preventDefault();
+  const submitHandler = async (e) => {
+    e.preventDefault();
 
-      if (!validate.isValid) {
-        return;
-      }
-  
-      const data = { booking: [] };
-      const times = new Set();
-  
-  
-      new FormData(bookingForm).forEach((value, field) => {
-        if (field === 'booking') {
-          const [comedian, time] = value.split(",");
-  
-          if (comedian && time) {
-            data.booking.push({ comedian, time });
-            times.add(time);
-            notification.show('Бронь принята', true);
-          }
-        } else {
-          data[field] = value;
-        }
-      });
-
-      if (times.size !== data.booking.length) {
-        notification.show('Упс, а ты точно сможешь быть в нескольких местах одновременно?', false);
-        return
-      }
-
-      if (!times.size) {
-        notification.show('Вы не выбрали комика и/или время', false);
-        return
-      }
-
-      const method = bookingForm.getAttribute('method');
-
-      let isSent = false;
-
-      if (method === 'PATCH') {
-        isSent = await sendData(method, data, data.ticketNumber);
-      } else {
-        isSent = await sendData(method, data);
-      }
-
-      if (isSent) {
-        notification.show('Бронь принята', true);
-        changeSection();
-        bookingForm.reset();
-        bookingComediansList.textContent = '';
-      }
+    if (!validate.isValid) {
+      return;
     }
-  
 
-    bookingForm.addEventListener('submit', submitHandler);
+    const data = { booking: [] };
+    const times = new Set();
+
+
+    new FormData(bookingForm).forEach((value, field) => {
+      if (field === 'booking') {
+        const [comedian, time] = value.split(",");
+
+        if (comedian && time) {
+          data.booking.push({ comedian, time });
+          times.add(time);
+          notification.show('Бронь принята', true);
+        }
+      } else {
+        data[field] = value;
+      }
+    });
+
+    if (times.size !== data.booking.length) {
+      notification.show('Упс, а ты точно сможешь быть в нескольких местах одновременно?', false);
+      return
+    }
+
+    if (!times.size) {
+      notification.show('Вы не выбрали комика и/или время', false);
+      return
+    }
+
+    const method = bookingForm.getAttribute('method');
+
+    let isSent = false;
+
+    if (method === 'PATCH') {
+      isSent = await sendData(method, data, data.ticketNumber);
+    } else {
+      isSent = await sendData(method, data);
+    }
+
+    if (isSent) {
+      notification.show('Бронь принята', true);
+      changeSection();
+      eventButtonReserve.classList.remove('event__button_hidden');
+      eventButtonEdit.classList.remove('event__button_hidden');
+      bookingForm.reset();
+      bookingComediansList.textContent = '';
+    }
+  }
+
+
+  bookingForm.addEventListener('submit', submitHandler);
 }
