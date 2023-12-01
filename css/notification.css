@@ -1,0 +1,56 @@
+.notification {
+  position: fixed;
+  max-width: 600px;
+  right: 50px;
+  bottom: 50px;
+  color: #fff;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.2;
+  border-radius: 16px;
+  background-color: #474794;
+  padding: 32px;
+  z-index: 1000;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all .3s ease-in-out;
+  pointer-events: none;
+}
+
+.notification_show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.notification_success {
+  padding-right: 76px;
+  background: #00992B url('../img/check-bold.svg') right 32px center / 36px no-repeat;
+}
+
+.notification_error {
+  background-color: #900;
+}
+
+@media (max-width: 1024px) {
+  .notification {
+    font-size: 24px;
+    padding: 18px;
+    max-width: 450px;
+  }
+
+  .notification_success {
+    padding-right: 76px;
+  }
+}
+
+@media (max-width: 680px) {
+  .notification {
+    font-size: 20px;
+    padding: 16px;
+    max-width: 250px;
+  }
+
+  .notification_success {
+    padding-right: 75px;
+  }
+}
