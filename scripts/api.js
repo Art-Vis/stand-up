@@ -1,4 +1,4 @@
-import { Notification } from './notification.js';
+import { Notification } from './notification';
 
 const URL = 'https://quark-amber-worm.glitch.me/'; //GLITCH
 const notification = Notification.getInstance();
