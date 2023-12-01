@@ -126,7 +126,7 @@
   border-radius: 36px;
 }
 
-.booking__holl {
+.booking__hall {
   white-space: nowrap;
   font-size: 18px;
   line-height: 1.4;
@@ -135,6 +135,29 @@
   background-repeat: no-repeat;
   background-position: right;
   background-size: 24px;
+}
+
+.booking__client-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.booking__client-item {
+  margin: 0;
+}
+
+.booking__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.booking__title-qr {
+  grid-column: 1 / -1;
+  font-size: 34px;
+  margin-bottom: 20px;
 }
 
 @media (max-width: 1024px) {
@@ -165,7 +188,8 @@
     max-width: none;
   }
 }
-@media (max-width: 680px) { 
+
+@media (max-width: 680px) {
   .booking__container {
     padding: 0 16px;
   }
@@ -184,7 +208,7 @@
     margin-right: 0;
     margin-bottom: 8px;
   }
-  
+
   .booking__fieldset_comedians {
     margin-bottom: 32px;
   }

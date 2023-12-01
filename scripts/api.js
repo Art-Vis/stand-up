@@ -1,6 +1,6 @@
 import { Notification } from './notification.js';
 
-const URL = 'http://localhost:8080/';
+const URL = 'https://quark-amber-worm.glitch.me/'; //GLITCH
 const notification = Notification.getInstance();
 
 export const getComedians = async () => {
@@ -16,6 +16,20 @@ export const getComedians = async () => {
     notification.show('Возникла ошибка сервера, попробуйте позже', false);
   }
 }
+
+export const getClient = async (ticketNumber) => {
+  try {
+    const response = await fetch(`${URL}clients/${ticketNumber}`);
+    const data = await response.json();
+    if (!response.ok) {
+      console.log('response.ok: ', response);
+    }
+    return data;
+  } catch (error) {
+    console.log('error: ', error);
+    notification.show('Возникла ошибка сервера, попробуйте позже', false);
+  }
+};
 
 export const sendData = async (method, data, id) => {
   try {
